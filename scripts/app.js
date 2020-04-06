@@ -3,6 +3,7 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time = document.querySelector('img.time');
 const icon = document.querySelector('.icon img');
+const forecast = new Forecast();
 
 const updateUI = data => {
 
@@ -30,15 +31,6 @@ const updateUI = data => {
     if(card.classList.contains('d-none')){
         card.classList.remove('d-none');
     }
-
-};
-
-const updateCity = async (city) => {
-    
-    const cityDets = await getCity(city);
-    const weather = await getWeather(cityDets.Key);
-
-    return { cityDets, weather };
 };
 
 cityForm.addEventListener('submit', e => {
@@ -50,7 +42,7 @@ cityForm.addEventListener('submit', e => {
     cityForm.reset();
 
     // update the UI with new city
-    updateCity(city)
+    forecast.updateCity(city)
         .then(data => updateUI(data))
         .catch(err => console.log(err))
 });
